@@ -77,3 +77,33 @@ void RandomQuickSort(vector<int> &vec) {
     l.insert(l.end(), r.begin(), r.end());
     vec = l;
 }
+
+void MergeSort(vector<int> &vec) {
+    int lenV = vec.size();
+    if (!lenV) return;
+    
+    int x = lenV/2;
+    vector<int> l, r;
+    copy(vec.begin(), vec.begin()+x, back_inserter(l));
+    copy(vec.begin()+x, vec.end(), back_inserter(r));
+
+    if (l.size()>=2) MergeSort(l);
+    if (r.size()>=2) MergeSort(r);
+
+    deque<int> dq;
+    for (auto x: l) dq.push_back(x);
+    reverse(r.begin(), r.end());
+    for (auto x: r) dq.push_back(x);
+
+    vec.clear();
+    while (dq.size()) {
+        if (dq.front()<=dq.back()) {
+            vec.push_back(dq.front());
+            dq.pop_front();
+        }
+        else {
+            vec.push_back(dq.back());
+            dq.pop_back();
+        }
+    }
+}
